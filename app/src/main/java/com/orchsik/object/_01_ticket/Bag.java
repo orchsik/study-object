@@ -6,10 +6,10 @@ public class Bag {
   private Ticket ticket;
 
   public Bag(long amount) {
-    this(null, amount);
+    this(amount, null);
   }
 
-  public Bag(Invitation invitation, long amount) {
+  public Bag(long amount, Invitation invitation) {
     this.invitation = invitation;
     this.amount = amount;
   }
@@ -25,12 +25,12 @@ public class Bag {
     }
   }
 
-  private void setTicket(Ticket ticket) {
-    this.ticket = ticket;
+  public boolean hasTicket() {
+    return ticket != null;
   }
 
-  private boolean hasTicket() {
-    return ticket != null;
+  private void setTicket(Ticket ticket) {
+    this.ticket = ticket;
   }
 
   private boolean hasInvitation() {
