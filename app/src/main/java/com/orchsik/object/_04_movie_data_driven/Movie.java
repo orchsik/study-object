@@ -1,15 +1,10 @@
 package com.orchsik.object._04_movie_data_driven;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * ⦿ 캡슐화 위반
- * 직접 객체의 내부에 접근할 수 없기 때문에 캡슐화의 원칙을 지키고 있는 것처럼 보인다.
- * 하지만 접근자와 수정자 메서드는 객체 내부의 상태에 대해 어떤 정보도 캡슐화하지 못한다.
- * getFee 메서드와 setFee 메서드는 Movie 내부에 Money 타입의 fee라는 이름의 인스턴스 변수가 존재한다는 사실을
- * 퍼블릭 인터페이스에 노골적으로 드러낸다. 
- */
+import lombok.Getter;
 
 /**
  * @title - 영화제목
@@ -26,49 +21,45 @@ public class Movie {
   private Duration runningTime;
   private Money fee;
   private List<DiscountCondition> discountConditions;
-
+  @Getter()
   private MovieType movieType;
   private Money discountAmount;
   private double discountPercent;
 
-  public MovieType getMovieType() {
-    return movieType;
+  public Money calculateAmountDiscountedFee() {
+    if (movieType != MovieType.AMOUNT_DISCOUNT) {
+      throw new IllegalArgumentException();
+    }
+    return fee.minus(discountAmount);
   }
 
-  public void setMovieType(MovieType movieType) {
-    this.movieType = movieType;
+  public Money calculatePercentDiscountedFee() {
+    if (movieType != MovieType.PERCENT_DISCOUNT) {
+      throw new IllegalArgumentException();
+    }
+    return fee.minus(fee.times(discountPercent));
   }
 
-  public Money getFee() {
+  public Money calculateNoneDiscountedFee() {
+    if (movieType != MovieType.NONE_DISCOUNT) {
+      throw new IllegalArgumentException();
+    }
     return fee;
   }
 
-  public void setFee(Money fee) {
-    this.fee = fee;
-  }
-
-  public Money getDiscountAmount() {
-    return discountAmount;
-  }
-
-  public void setDiscountConditions(List<DiscountCondition> discountConditions) {
-    this.discountConditions = discountConditions;
-  }
-
-  public List<DiscountCondition> getDiscountConditions() {
-    return discountConditions;
-  }
-
-  public void setDiscountAmount(Money discountAmount) {
-    this.discountAmount = discountAmount;
-  }
-
-  public double getDiscountPercent() {
-    return discountPercent;
-  }
-
-  public void setDiscountPercent(double discountPercent) {
-    this.discountPercent = discountPercent;
+  public boolean isDiscountable(LocalDateTime whenScreened, int sequence) {
+    for (DiscountCondition condition : discountConditions) {
+      if (condition.getType() == DiscountConditionType.PERIOD) {
+        if (condition.isDiscountable(whenScreened.getDayOfWeek(), whenScreened.toLocalTime())) {
+          return true;
+        }
+      } else {
+        if (condition.isDiscountable(sequence)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
 }
