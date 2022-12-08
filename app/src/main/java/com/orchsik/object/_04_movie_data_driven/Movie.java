@@ -4,6 +4,14 @@ import java.time.Duration;
 import java.util.List;
 
 /**
+ * ⦿ 캡슐화 위반
+ * 직접 객체의 내부에 접근할 수 없기 때문에 캡슐화의 원칙을 지키고 있는 것처럼 보인다.
+ * 하지만 접근자와 수정자 메서드는 객체 내부의 상태에 대해 어떤 정보도 캡슐화하지 못한다.
+ * getFee 메서드와 setFee 메서드는 Movie 내부에 Money 타입의 fee라는 이름의 인스턴스 변수가 존재한다는 사실을
+ * 퍼블릭 인터페이스에 노골적으로 드러낸다. 
+ */
+
+/**
  * @title - 영화제목
  * @runningTime - 상영시간
  * @fee - 기본요금
