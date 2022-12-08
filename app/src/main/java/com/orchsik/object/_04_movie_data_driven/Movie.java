@@ -7,6 +7,21 @@ import java.util.List;
 import lombok.Getter;
 
 /**
+ * ⦿ 캡슐화 위반
+ * calculateAmountDiscountFee, calculatePercentDiscountFee, calculateNoneDiscountFee 매서드.
+ * 여기서 노출시키는 것은 할인 정책의 종류다. 만약 새로운 정책이 추가되거나 제거된다면 어떻게 될 것인가?
+ * 아마도 이 메서드들에 의존하는 모든 클라이언트가 영향을 받을 것이다.
+ * 
+ * isDiscountable 메서드.
+ * 캠슐화 위반으로 DiscountCondition의 내부 구현이 외부로 노출됐기 때문에 Movie와 DiscountCondition 사이의
+ * 결합도가 높을 수 밖에 없다.
+ * DiscountCondition의 기간 할인 조건의 명칭이 PERIOD에서 다른 값으로 변경된다면 Movie를 수정해야 한다.
+ * DiscountCondition의 종류가 추가되거나 삭제된다면 Movie 안의 if ~ else 구문을 수정해야 한다.
+ * 각 DiscountCondition의 만족 여부를 판단하는 데 필요한 정보가 변경된다면 Movie의 isDiscountable 메서드로 전달된
+ * 파라미터를 변경해야 한다.
+ */
+
+/**
  * @title - 영화제목
  * @runningTime - 상영시간
  * @fee - 기본요금

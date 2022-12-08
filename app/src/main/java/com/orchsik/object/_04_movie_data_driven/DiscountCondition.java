@@ -5,6 +5,16 @@ import java.time.LocalTime;
 
 import lombok.Getter;
 
+/**
+ * ⦿ 캡슐화 위반
+ * isDiscountable 메서드의 시그니처를 보면 DiscountCondition에 속성으로 포함돼 있는
+ * DayOfWeek 타입의 요일 정보와 LocalTime 타입의 시간 정보를 파라미터로 받는다. 이 메서드는 개체
+ * 내부에 DayOfWeek 타입과 LocalTime 타입의 시간 정보가 인스턴스 변수로 포함돼 있다는 사실을 인터페이스를
+ * 통해 외부에 노출하고 있다.
+ * 만약 DiscountCondition의 속성을 변경해야 한다면 어떻게 될까?
+ * 아마도 isDiscountable 메서드의 파라미터를 수정하고 해당 메서드를 사용하는 모든 클라이언트도 함께 수정해야
+ * 할 것이다. 내부 구현의 변경이 외부로 퍼져나가는 파급 효과는 캡슐화가 부족하다는 명백한 증거다.
+ */
 public class DiscountCondition {
   @Getter()
   private DiscountConditionType type;
