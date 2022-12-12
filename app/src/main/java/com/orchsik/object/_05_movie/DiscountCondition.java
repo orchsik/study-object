@@ -1,36 +1,10 @@
 package com.orchsik.object._05_movie;
 
-import java.time.DayOfWeek;
-import java.time.LocalTime;
-
-public class DiscountCondition {
-  /**
-   * 메시지에 응답하기 위해 필요한 변수
-   */
-  private DiscountConditionType type;
-  private int sequence;
-  private DayOfWeek dayOfWeek;
-  private LocalTime startTime;
-  private LocalTime endTime;
-
-  /**
-   * 5) Movie는 각 DiscountCondition에 "할인 여부를 판단하라" 메시지를 전송한다.
-   */
-  public boolean isSatisfiedBy(Screening screening) {
-    if (type == DiscountConditionType.PERIOD) {
-      return isSatisfiedByePeriod(screening);
-    }
-    return isSatisfiedBySequence(screening);
-  }
-
-  private boolean isSatisfiedBySequence(Screening screening) {
-    return sequence == screening.getSequence();
-  }
-
-  private boolean isSatisfiedByePeriod(Screening screening) {
-    return dayOfWeek.equals(screening.getWhenScreened().getDayOfWeek())
-        && startTime.compareTo(screening.getWhenScreened().toLocalTime()) <= 0
-        && endTime.compareTo(screening.getWhenScreened().toLocalTime()) >= 0;
-  }
-
+/**
+ * 변경으로 부터 보호 됨.
+ * 새로운 DiscountCondition 타입을 추가하더라도 Movie가 영향을 받지 않는다는 것을 의미한다.
+ * 오직 Discount 인터페이스를 실체화하는 클래스를 추가하는 것으로 할인 조건의 종류를 확장할 수 있다.
+ */
+public interface DiscountCondition {
+  public boolean isSatisfiedBy(Screening screening);
 }
