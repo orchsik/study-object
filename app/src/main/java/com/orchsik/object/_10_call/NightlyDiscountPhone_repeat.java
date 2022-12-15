@@ -13,7 +13,7 @@ import lombok.Getter;
  * 밤 10시를 기준으로 요금이 달라진다는 점을 제외하고 Phone과 거의 유사하다
  */
 @Getter()
-public class NightlyDiscountPhone {
+public class NightlyDiscountPhone_repeat {
   private static final int LATE_NIGHT_HOUR = 22;
 
   private Money nightlyAmount; // 심야 단위요금
@@ -22,7 +22,7 @@ public class NightlyDiscountPhone {
   private List<Call> calls = new ArrayList<>(); // 통화 목록
   private double taxRate;
 
-  public NightlyDiscountPhone(Money nightlyAmount, Money regularAmount, Duration seconds, double taxRate) {
+  public NightlyDiscountPhone_repeat(Money nightlyAmount, Money regularAmount, Duration seconds, double taxRate) {
     this.nightlyAmount = nightlyAmount;
     this.regularAmount = regularAmount;
     this.seconds = seconds;

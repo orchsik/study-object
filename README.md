@@ -171,7 +171,7 @@
   * [학습 코드](https://github.com/orchsik/study-object/pull/7)
   * 상속과 중복 코드  
     * DRY 원칙
-    * 중복과 변경
+    * 타입 코드의 값에 따라 로직을 분기시켜 중복을 피할 수 있지만, 타입 코드를 사용하는 클래스는 낮은 응집도와 높은 결합도 문제에 시달린다.
     * 상속을 이용해서 중복 코드 제거하기
     * 강하게 결합된 Phone과 NightlyDiscountPhone
   * 취약한 기반 클래스 문제
