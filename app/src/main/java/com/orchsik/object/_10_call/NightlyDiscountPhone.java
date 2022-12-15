@@ -20,11 +20,13 @@ public class NightlyDiscountPhone {
   private Money regularAmount; // 단위요금
   private Duration seconds; // 단위시간
   private List<Call> calls = new ArrayList<>(); // 통화 목록
+  private double taxRate;
 
-  public NightlyDiscountPhone(Money nightlyAmount, Money regularAmount, Duration seconds) {
+  public NightlyDiscountPhone(Money nightlyAmount, Money regularAmount, Duration seconds, double taxRate) {
     this.nightlyAmount = nightlyAmount;
     this.regularAmount = regularAmount;
     this.seconds = seconds;
+    this.taxRate = taxRate;
   }
 
   public void call(Call call) {
@@ -40,7 +42,7 @@ public class NightlyDiscountPhone {
         result = result.plus(regularAmount.times(call.geDuration().getSeconds() / seconds.getSeconds()));
       }
     }
-    return result;
+    return result.minus(result.times(taxRate));
   }
 
 }

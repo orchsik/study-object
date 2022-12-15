@@ -14,17 +14,17 @@ import lombok.Getter;
  * 일반적으로 통화 목록은 전화기 안에 보관된다
  * 따라서 Call 목록을 관리할 정보 전문가는 Phone 이다
  */
+@Getter()
 public class Phone {
-  @Getter()
   private Money amount; // 단위요금
-  @Getter()
   private Duration seconds; // 단위시간
-  @Getter()
   private List<Call> calls = new ArrayList<>(); // 통화 목록
+  private double taxRate; // 세금
 
-  public Phone(Money amount, Duration seconds) {
+  public Phone(Money amount, Duration seconds, double taxRate) {
     this.amount = amount;
     this.seconds = seconds;
+    this.taxRate = taxRate;
   }
 
   public void call(Call call) {
@@ -36,7 +36,7 @@ public class Phone {
     for (Call call : calls) {
       result = result.plus(amount.times(call.geDuration().getSeconds() / seconds.getSeconds()));
     }
-    return result;
+    return result.minus(result.times(taxRate));
   }
 
 }
